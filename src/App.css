@@ -1,10 +1,12 @@
 #root {
-
-
-  
   text-align: center;
 }
 
+h1{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: medium;
+  color: black;
+}
 table{
   width: 100%;
   border-collapse: collapse;
