@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState ,useEffect, useActionState} from "react";
 import { fetchTransactions } from "./services/api";
 import { calculateRewardPoints } from "./utils/calculateRewards";
 import TransactionsTable from "./components/TransactionsTable";
@@ -9,8 +9,11 @@ import './App.css'
 
 function App() {
   const [transactions,setTransactions] = useState([]);
+  const [filteredTransactions,setFilteredTransactions] = useState([]);
    const [loading,setLoading] =useState(true);
    const [error,setError]=useState(null);
+   const [startMonth,setStartMonth]=useState('');
+   const [endMonth,setEndMonth]=useState('');
 
    useEffect(()=>{
     const getData =async() =>{
@@ -18,6 +21,7 @@ function App() {
            const data = await fetchTransactions();
            const transactionWithRewards =data.map(transaction=>({...transaction,rewardPoints:calculateRewardPoints(transaction.price)}));
            setTransactions(transactionWithRewards);
+           setFilteredTransactions(transactionWithRewards);
         }
         catch(err){
            setError('Failed to fetch transactions');
@@ -27,16 +31,42 @@ function App() {
     };
     getData();
   },[]);
+
+  const handleFilter =()=>{
+      if(!startMonth && !endMonth){
+         setFilteredTransactions(transactions);
+         return;
+      }
+    const start= new Date(startMonth + '-01');
+    const end = new Date(endMonth+'-31');
+    const filtered=transactions.filter(transaction=>{
+      const transacDate=new Date(transaction.date);
+      return transacDate>=start&&transacDate<=end;
+    })
+    setFilteredTransactions(filtered);
+
+
+  }
    
-  if (loading) return <div>loading...</div>;
+  if (loading) return <div className="loading">Loading Please Wait..</div>;
   if(error) return <div>{error}</div>;
 
   return(
     <div style={{padding:'20px'}}>
        <h1 style={{fontFamily:'cursive',color:'green',fontSize:'20px'}}>Customer Rewards Program</h1>
-      <TransactionsTable transactions={transactions}/>
-      <MonthlyRewardsTable transactions={transactions}/>
-      <TotalRewardsTable transactions={transactions}/>
+      
+      <div style={{marginBlock:'20px'}}>
+         <label>Start Month:</label>
+         <input type="month" value={startMonth} onChange={(e)=>setStartMonth(e.target.value)}/>
+
+<label style={{marginLeft:'10px'}}>End Month:</label>
+<input type="month" value={endMonth} onChange={(e)=>setEndMonth(e.target.value)}/>
+<button onClick={handleFilter} style={{marginLeft:'10px'}}>Apply Filter</button>
+      </div>
+      
+      <TransactionsTable transactions={filteredTransactions}/>
+      <MonthlyRewardsTable transactions={filteredTransactions}/>
+      <TotalRewardsTable transactions={filteredTransactions}/>
    </div>
 
 )
