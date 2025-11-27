@@ -52,7 +52,7 @@ function App() {
   if(error) return <div>{error}</div>;
 
   return(
-    <div style={{padding:'20px'}}>
+    <div className="app-container">
        <h1 style={{fontFamily:'cursive',color:'green',fontSize:'20px'}}>Customer Rewards Program</h1>
       
       <div style={{marginBlock:'20px'}}>
