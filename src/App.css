@@ -37,7 +37,8 @@ th{
    width: 100%;
    font-size: 24px;
    font-weight: bold;
-   color:brown;
+   font-family:Georgia, 'Times New Roman', Times, serif;
+   color:rgb(14, 88, 19);
    animation: pulse 1.5s infinite;
 
 }
