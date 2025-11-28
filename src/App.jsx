@@ -53,7 +53,7 @@ function App() {
 
   return(
     <div className="app-container">
-       <h1 style={{fontFamily:'cursive',color:'green',fontSize:'20px'}}>Customer Rewards Program</h1>
+       <h1 style={{fontFamily:'cursive',color:'green',fontSize:'20px'}}>Customer Rewards Data</h1>
       
       <div style={{marginBlock:'20px'}}>
          <label>Start Month:</label>
