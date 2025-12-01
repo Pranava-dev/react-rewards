@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-const TransactionsTable =({transactions})=>(
+const TransactionsTable =({transactions})=>{
+
+    const sortedTransactions=[...transactions].sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+    return(
     <div>
         <h1 >
             Transaction Table
@@ -11,7 +15,7 @@ const TransactionsTable =({transactions})=>(
             <tr><th>ID</th><th>Customer</th><th>Date</th><th>Product</th><th>Price</th><th>Reward Points</th></tr>
         </thead>
         <tbody>
-            {transactions.map(transaction=>(
+            {sortedTransactions.map(transaction=>(
                 <tr key={transaction.id}>
                     <td>{transaction.id}</td>
                     <td>{transaction.name}</td>
@@ -27,7 +31,8 @@ const TransactionsTable =({transactions})=>(
      </table>
 
     </div>
-)
+    )
+}
 
 TransactionsTable.propTypes={
     transactions:PropTypes.array.isRequired

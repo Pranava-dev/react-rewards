@@ -1,4 +1,7 @@
 export const calculateRewardPoints =(amount)=>{
+
+    if(isNaN(amount)||amount<0) return 0;
+
     let points =0;
     if(amount>100){
         points+=(amount-100)*2;
