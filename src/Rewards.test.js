@@ -14,6 +14,8 @@ test("calculate reward points correctly",()=>{
    expect(calculateRewardPoints(50)).toBe(0);
 });
 
+
+
 //Test 2 Mock API and verify data
 
 test("fetchTransacrtions should return mocked data",async()=>{
