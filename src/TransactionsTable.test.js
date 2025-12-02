@@ -34,9 +34,9 @@ describe("Transactiontable Component",()=>{
     expect(screen.getByText(/Transaction Table/i)).toBeInTheDocument();
     expect(screen.getByText(/Customer/i)).toBeInTheDocument();
     expect(screen.getByText(/Date/i)).toBeInTheDocument();
-   
-   
-
+    expect(screen.getByText(/Product/i)).toBeInTheDocument();
+    expect(screen.getByText(/Price/i)).toBeInTheDocument();
+    expect(screen.getByText(/Reward Points/i)).toBeInTheDocument();
 
     })
     

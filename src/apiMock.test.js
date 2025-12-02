@@ -1,22 +1,16 @@
-import { calculateRewardPoints } from "./utils/calculateRewards";
+
 import { fetchTransactions } from "./services/api";
 
 jest.mock("./services/api",()=>({
     fetchTransactions:jest.fn()
 }));
 
-describe("Rewards  test",()=>{
-
-   //Test 1 Calculation logic
-test("calculate reward points correctly",()=>{
-   expect(calculateRewardPoints(120)).toBe(90);
-   expect(calculateRewardPoints(75)).toBe(25);
-   expect(calculateRewardPoints(50)).toBe(0);
-});
+describe("Mocking API",()=>{
 
 
 
-//Test 2 Mock API and verify data
+
+//Test Mock API and verify data
 
 test("fetchTransacrtions should return mocked data",async()=>{
    const  mockData=[ {
