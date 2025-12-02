@@ -55,13 +55,13 @@ function App() {
     <div className="app-container">
        <h1 className="main-header">Customer Rewards Data</h1>
       
-      <div style={{marginBlock:'20px'}}>
+      <div className="filter-container" style={{marginBlock:'20px'}}>
          <label>Start Month:</label>
          <input type="month" value={startMonth} onChange={(e)=>setStartMonth(e.target.value)}/>
 
 <label style={{marginLeft:'10px'}}>End Month:</label>
 <input type="month" value={endMonth} onChange={(e)=>setEndMonth(e.target.value)}/>
-<button onClick={handleFilter} style={{marginLeft:'10px'}}>Apply Filter</button>
+<button className="filter-button" onClick={handleFilter} style={{marginLeft:'10px'}}>Apply Filter</button>
       </div>
       
       <TransactionsTable transactions={filteredTransactions}/>
