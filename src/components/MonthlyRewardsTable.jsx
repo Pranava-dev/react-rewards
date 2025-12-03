@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {
+    Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,
+    TablePagination,
+} from '@mui/material';
 
 const MonthlyRewardsTable =({transactions})=>{
 
@@ -16,26 +20,45 @@ const MonthlyRewardsTable =({transactions})=>{
 
 
 const rows=Object.values(monthlyData);
+const [page,setPage]=useState(0);
+const [rowsPerPage,setRowsPerPage]=useState(5);
+
+    const handleChangePage=(e,newPage)=>{
+      setPage(newPage);
+    }
+
 
 return(
     <div>
         <h1 >User Monthly Rewards</h1>
-        <table border='1'>
-        <thead>
-            <tr><th>Customer ID</th><th>Name</th><th>Month</th><th>Year</th><th>Reward Points</th></tr>
-        </thead>
-        <tbody>
+        <TableContainer>
+        <Table>
+        <TableHead>
+            <TableRow><TableCell>Customer ID</TableCell><TableCell>Name</TableCell><TableCell>Month</TableCell><TableCell>Year</TableCell><TableCell>Reward Points</TableCell></TableRow>
+        </TableHead>
+        <TableBody>
             {
-                rows.map((row,id)=>(
-                    <tr key={id}>
-                        <td>{row.customerId}</td><td>{row.customerName || 'Unknown'}</td><td>{row.month}</td><td>{row.year}</td><td>{row.points}</td>
-                    </tr>
+                rows.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map((row,id)=>(
+                    <TableRow key={id}>
+                        <TableCell>{row.customerId}</TableCell><TableCell>{row.customerName || 'Unknown'}</TableCell><TableCell>{row.month}</TableCell><TableCell>{row.year}</TableCell><TableCell>{row.points}</TableCell>
+                    </TableRow>
                 ))
             }
 
-        </tbody>
+        </TableBody>
 
-        </table>
+        </Table>
+        <TablePagination
+       component="div"
+       count={rows.length}
+       page={page}
+       onPageChange={handleChangePage}
+       rowsPerPage={rowsPerPage}
+       rowSpan={[]}
+     
+     />
+       
+        </TableContainer>
     </div>
 );
 

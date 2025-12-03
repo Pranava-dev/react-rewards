@@ -13,24 +13,22 @@ describe("Mocking API",()=>{
 //Test Mock API and verify data
 
 test("fetchTransacrtions should return mocked data",async()=>{
-   const  mockData=[ {
-      "id":1,
-      "customerId":101,
-      "name":"Alice",
-      "date":"2025-12-03",
-      "product":"Laptop",
-      "price":178.45
-
+   const  mockData=[{
+    "transactionId": "TXN0001",
+    "customerId": 1001,
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2025-01-04",
+    "products": null,
+    "totalPrice": "849.81"
   },
   {
-      "id":2,
-      "customerId":103,
-      "name":"Charlie",
-      "date":"2025-12-07",
-      "product":"Mouse",
-      "price":65.32
-  }];
-
+    "transactionId": "TXN0002",
+    "customerId": 1001,
+    "customerName": null,
+    "purchaseDate": "2025-03-29",
+    "products": "Mouse, Monitor, Laptop",
+    "totalPrice": "475.86"
+  },];
   fetchTransactions.mockResolvedValue(mockData);
 
   const result =await fetchTransactions();
