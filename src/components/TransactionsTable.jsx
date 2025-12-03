@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const TransactionsTable =({transactions})=>{
 
-    const sortedTransactions=[...transactions].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    const sortedTransactions=[...transactions].sort((a,b)=>new Date(b.purchaseDate)-new Date(a.purchaseDate));
 
     return(
     <div>
@@ -16,13 +16,13 @@ const TransactionsTable =({transactions})=>{
         </thead>
         <tbody>
             {sortedTransactions.map((transaction,index)=>(
-                <tr key={transaction.id}>
+                <tr key={transaction.transactionId}>
                    
-                    <td>{transaction.id}</td>
-                    <td>{transaction.name}</td>
-                    <td>{new Date(transaction.date).toLocaleDateString()}</td>
-                    <td>{transaction.product}</td>
-                    <td>${transaction.price.toFixed(2)}</td>
+                    <td>{transaction.transactionId}</td>
+                    <td>{transaction.customerName}</td>
+                    <td>{new Date(transaction.purchaseDate).toLocaleDateString()}</td>
+                    <td>{transaction.products}</td>
+                    <td>${parseFloat(transaction.totalPrice).toFixed(2)}</td>
                     <td>{transaction.rewardPoints}</td>
 
                 </tr>

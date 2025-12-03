@@ -3,12 +3,12 @@ import React from 'react';
 const MonthlyRewardsTable =({transactions})=>{
 
     const monthlyData=transactions.reduce((acc,transaction)=>{
-         const date= new Date(transaction.date);
+         const date= new Date(transaction.purchaseDate);
          const month = date.toLocaleString('default',{month:'long'});
          const year =date.getFullYear();
          const key = `${transaction.customerId}-${month}-${year}`;
          if(!acc[key]){
-            acc[key] = {customerId:transaction.customerId,name:transaction.name,month,year,points:0};
+            acc[key] = {customerId:transaction.customerId,customerName:transaction.customerName,month,year,points:0};
          }
          acc[key].points+=transaction.rewardPoints;
          return acc;
@@ -28,7 +28,7 @@ return(
             {
                 rows.map((row,id)=>(
                     <tr key={id}>
-                        <td>{row.customerId}</td><td>{row.name}</td><td>{row.month}</td><td>{row.year}</td><td>{row.points}</td>
+                        <td>{row.customerId}</td><td>{row.customerName || 'Unknown'}</td><td>{row.month}</td><td>{row.year}</td><td>{row.points}</td>
                     </tr>
                 ))
             }

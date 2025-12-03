@@ -4,7 +4,7 @@ const TotalRewardsTable =({transactions})=>{
     
     const totals = transactions.reduce((acc,transaction)=>{
         if(!acc[transaction.customerId]){
-            acc[transaction.customerId]={name:transaction.name,points:0};
+            acc[transaction.customerId]={customerName:transaction.customerName,points:0};
         } 
          acc[transaction.customerId].points+=transaction.rewardPoints;
          return acc;
@@ -19,7 +19,7 @@ const TotalRewardsTable =({transactions})=>{
         </thead>
         <tbody>
             {Object.entries(totals).map(([id,data])=>(
-                <tr key={id}><td>{data.name}</td><td>{data.points}</td></tr>
+                <tr key={id}><td>{data.customerName}</td><td>{data.points}</td></tr>
             ))}
         </tbody>
 

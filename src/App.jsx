@@ -18,8 +18,15 @@ function App() {
    useEffect(()=>{
     const getData =async() =>{
         try{
-           const data = await fetchTransactions();
-           const transactionWithRewards =data.map(transaction=>({...transaction,rewardPoints:calculateRewardPoints(transaction.price)}));
+           const response = await fetch('transactions.json');
+           if(!response.ok){
+            throw new Error('Failed to fetch transactions...');
+           }
+           const data=await response.json();
+           if(!Array.isArray(data)){
+            throw new Error('Invalid Json...');
+           }
+           const transactionWithRewards =data.map(transaction=>({...transaction,rewardPoints:calculateRewardPoints(transaction.totalPrice)}));
            setTransactions(transactionWithRewards);
            setFilteredTransactions(transactionWithRewards);
         }
@@ -40,7 +47,7 @@ function App() {
     const start= new Date(startMonth + '-01');
     const end = new Date(endMonth+'-31');
     const filtered=transactions.filter(transaction=>{
-      const transacDate=new Date(transaction.date);
+      const transacDate=new Date(transaction.purchaseDate);
       return transacDate>=start&&transacDate<=end;
     })
     setFilteredTransactions(filtered);
@@ -67,6 +74,7 @@ function App() {
       <TransactionsTable transactions={filteredTransactions}/>
       <MonthlyRewardsTable transactions={filteredTransactions}/>
       <TotalRewardsTable transactions={filteredTransactions}/>
+     
    </div>
 
 )
