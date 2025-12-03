@@ -1,5 +1,6 @@
 # React
 A single-page React application that simulates a Customer Rewards.
+featuring a filterable data table.
 
 # Feature
 - Calculate reward points<br/>
@@ -11,7 +12,8 @@ A single-page React application that simulates a Customer Rewards.
 - Custom pagination for tables<br/>
 - Total rewards per customer<br/>
 - Searching and sorting (asc|desc) on transaction records<br/>
-- Optimized view for all screen sizes (responsive design)<br/>
+- Responsive UI built with Material UI (MUI)<br/>
+- Data Fetched from Mock JSON files or API<br/>
 
 # Installation
 git clone https://github.com/Pranava-dev/react-rewards.git<br/>
@@ -22,7 +24,7 @@ npm start<br/>
 Build - React version(19)<br/>
 Style - Material UI, CSS<br/>
 API - fetch<br/>
-Testing - Jest<br/>
+Testing - RTL,Jest<br/>
 
 # Sample dataset
 I'm using fetch and json file to simulate real world API calls.<br/>
@@ -68,7 +70,7 @@ customer-rewards/
 ```
 
 # Test Script
-Test script to validate the reward calculation, sorting, date format functionality
+Test script to validate the reward calculation.
 ```js
 import { calculateRewardPoints } from "../utils/calculateRewards";
 
@@ -91,7 +93,7 @@ describe("Rewards  test", () => {
 > Pranava Mosam
 
 # UI
-Customer Rewards Dashboard
+Customer Rewards Data
 <img src="./src/assets/uiImages/Landing-page.png" alt="Retailer-dashboard" />
 
 Date validation
