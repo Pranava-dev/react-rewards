@@ -106,4 +106,4 @@ Transaction Table
 <img src="./src/assets/TransactionsTable.png" alt="Transactions">
 
 No data with the specific timeline
-<img src="./src/assets/uiImages/No-data.png"  alt="No-data" />
+<img src="./src/assets/No-data.png"  alt="No-data" />
