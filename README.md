@@ -94,7 +94,7 @@ describe("Rewards  test", () => {
 
 # UI
 Customer Rewards Data
-<img src="./src/assets/MainPage.png" alt="Home" />
+<img src="./src/assets/MainPage1.png" alt="Home" />
 
 Monthy data
 <img src="./src/assets/Monthly.png"  alt="Monthly Data Table" />
@@ -106,4 +106,4 @@ Transaction Table
 <img src="./src/assets/TransactionsTable.png" alt="Transactions">
 
 No data with the specific timeline
-<img src="./src/assets/No-data.png"  alt="No-data" />
+<img src="./src/assets/Nodata1.png"  alt="No-data" />

@@ -5,19 +5,41 @@ const Filter = ({ transactions, setFilteredTransactions }) => {
   const [startMonth, setStartMonth] = useState("");
   const [endMonth, setEndMonth] = useState("");
 
+
+  //Get first and last day of month
+
+  const getMonthBonds=(yyyyMm)=>{
+     const [year,month]=yyyyMm.split("-");
+     const y=Number(year);
+     const m=Number(month-1); //js months are 0 based
+     const start=new Date(y,m,1);
+     const end=new Date(y,m+1,0);//Day 0 of next month = last day of current
+     return {start,end};
+
+  }
   const handleFilter = () => {
     if (!startMonth && !endMonth) {
       setFilteredTransactions(transactions);
       return;
     }
-    const start = new Date(startMonth + "-01");
-    const end = new Date(endMonth + "-31");
+    const startKey=startMonth||endMonth;
+    const endKey=endMonth||startMonth;
+
+    const {start} = getMonthBonds(startKey);
+    const {end} = getMonthBonds(endKey);
     const filtered = transactions.filter((transaction) => {
       const transacDate = new Date(transaction.purchaseDate);
       return transacDate >= start && transacDate <= end;
     });
     setFilteredTransactions(filtered);
   };
+
+  const handleReset = () => {
+    
+    setFilteredTransactions(transactions);
+    setStartMonth("");
+    setEndMonth("");
+    }
 
   return (
     <Paper sx={{ p: 2 }}>
@@ -48,6 +70,9 @@ const Filter = ({ transactions, setFilteredTransactions }) => {
         />
         <Button onClick={handleFilter} variant="contained">
           Apply Filter
+        </Button>
+        <Button onClick={handleReset} >
+          Reset
         </Button>
       </Stack>
     </Paper>

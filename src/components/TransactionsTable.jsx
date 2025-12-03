@@ -46,11 +46,11 @@ const TransactionsTable = ({ transactions }) => {
             {paginatedData.map((transaction, index) => (
               <TableRow key={index}>
                 <TableCell>{transaction.transactionId}</TableCell>
-                <TableCell>{transaction.customerName}</TableCell>
+                <TableCell>{transaction.customerName  || "Unknown"}</TableCell>
                 <TableCell>
                   {new Date(transaction.purchaseDate).toLocaleDateString()}
                 </TableCell>
-                <TableCell>{transaction.products}</TableCell>
+                <TableCell>{transaction.products || "N/A"}</TableCell>
                 <TableCell>
                   ${parseFloat(transaction.totalPrice).toFixed(2)}
                 </TableCell>

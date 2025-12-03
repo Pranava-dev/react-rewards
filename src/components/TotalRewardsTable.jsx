@@ -45,7 +45,7 @@ const TotalRewardsTable = ({ transactions }) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(([id, data]) => (
                 <TableRow key={id}>
-                  <TableCell>{data.customerName}</TableCell>
+                  <TableCell>{data.customerName  || "Unknown"}</TableCell>
                   <TableCell>{isNaN(data.points) ? 0 : data.points}</TableCell>
                 </TableRow>
               ))}
