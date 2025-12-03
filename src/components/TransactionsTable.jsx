@@ -1,36 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types'
+import {
+    Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,
+    TablePagination,
+} from '@mui/material';
 
 const TransactionsTable =({transactions})=>{
 
     const sortedTransactions=[...transactions].sort((a,b)=>new Date(b.purchaseDate)-new Date(a.purchaseDate));
+    const [page,setPage]=useState(0);
+    const rowsPerPage=5;
+
+    const handleChangePage=(e,newPage)=>{
+      setPage(newPage);
+    }
+
+    const paginatedData=sortedTransactions.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage);
 
     return(
     <div>
         <h1 >
             Transaction Table
         </h1>
-     <table border='1'>
-        <thead>
-            <tr><th>ID</th><th>Customer</th><th>Date</th><th>Product</th><th>Price</th><th>Reward Points</th></tr>
-        </thead>
-        <tbody>
-            {sortedTransactions.map((transaction,index)=>(
-                <tr key={transaction.transactionId}>
+        <TableContainer >
+     <Table>
+        <TableHead>
+            <TableRow><TableCell>ID</TableCell><TableCell>Customer</TableCell><TableCell>Date</TableCell><TableCell>Product</TableCell><TableCell>Price</TableCell><TableCell>Reward Points</TableCell></TableRow>
+        </TableHead>
+        <TableBody>
+            {paginatedData.map((transaction,index)=>(
+                <TableRow key={transaction.transactionId}>
                    
-                    <td>{transaction.transactionId}</td>
-                    <td>{transaction.customerName}</td>
-                    <td>{new Date(transaction.purchaseDate).toLocaleDateString()}</td>
-                    <td>{transaction.products}</td>
-                    <td>${parseFloat(transaction.totalPrice).toFixed(2)}</td>
-                    <td>{transaction.rewardPoints}</td>
+                    <TableCell>{transaction.transactionId}</TableCell>
+                    <TableCell>{transaction.customerName}</TableCell>
+                    <TableCell>{new Date(transaction.purchaseDate).toLocaleDateString()}</TableCell>
+                    <TableCell>{transaction.products}</TableCell>
+                    <TableCell>${parseFloat(transaction.totalPrice).toFixed(2)}</TableCell>
+                    <TableCell>{transaction.rewardPoints}</TableCell>
 
-                </tr>
+                </TableRow>
             ))}
-        </tbody>
+        </TableBody>
 
-     </table>
-
+     </Table>
+     <TablePagination
+       component="div"
+       count={sortedTransactions.length}
+       page={page}
+       onPageChange={handleChangePage}
+       rowsPerPage={rowsPerPage}
+       rowSpan={[]}
+     
+     />
+        
+     </TableContainer>
     </div>
     )
 }

@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+    Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,
+} from '@mui/material';
+
 
 const TotalRewardsTable =({transactions})=>{
     
@@ -9,22 +13,26 @@ const TotalRewardsTable =({transactions})=>{
          acc[transaction.customerId].points+=transaction.rewardPoints;
          return acc;
     },{});
+   
+    
+    
 
     return (
         <div>
             <h1>Total Rewards</h1>
-            <table border='1'>
-        <thead>
-            <tr><th>Customer Name</th><th>Reward Points</th></tr>
-        </thead>
-        <tbody>
+            <TableContainer >
+            <Table>
+        <TableHead>
+            <TableRow><TableCell>Customer Name</TableCell><TableCell>Reward Points</TableCell></TableRow>
+        </TableHead>
+        <TableBody>
             {Object.entries(totals).map(([id,data])=>(
-                <tr key={id}><td>{data.customerName}</td><td>{data.points}</td></tr>
+                <TableRow key={id}><TableCell>{data.customerName}</TableCell><TableCell>{data.points}</TableCell></TableRow>
             ))}
-        </tbody>
+        </TableBody>
 
-        </table>
-
+        </Table>
+        </TableContainer>
         </div>
     );
 
