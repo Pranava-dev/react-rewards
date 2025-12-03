@@ -14,14 +14,14 @@ const MonthlyRewardsTable =({transactions})=>{
          if(!acc[key]){
             acc[key] = {customerId:transaction.customerId,customerName:transaction.customerName,month,year,points:0};
          }
-         acc[key].points+=transaction.rewardPoints;
+         acc[key].points+=Number(transaction.rewardPoints) || 0;
          return acc;
     },{});
 
 
 const rows=Object.values(monthlyData);
 const [page,setPage]=useState(0);
-const [rowsPerPage,setRowsPerPage]=useState(5);
+const [rowsPerPage,setRowsPerPage]=useState(10);
 
     const handleChangePage=(e,newPage)=>{
       setPage(newPage);
@@ -40,7 +40,7 @@ return(
             {
                 rows.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map((row,id)=>(
                     <TableRow key={id}>
-                        <TableCell>{row.customerId}</TableCell><TableCell>{row.customerName || 'Unknown'}</TableCell><TableCell>{row.month}</TableCell><TableCell>{row.year}</TableCell><TableCell>{row.points}</TableCell>
+                        <TableCell>{row.customerId}</TableCell><TableCell>{row.customerName || 'Unknown'}</TableCell><TableCell>{row.month}</TableCell><TableCell>{row.year}</TableCell><TableCell>{isNaN(row.points)? 0 : row.points}</TableCell>
                     </TableRow>
                 ))
             }

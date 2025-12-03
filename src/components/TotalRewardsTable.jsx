@@ -10,12 +10,12 @@ const TotalRewardsTable =({transactions})=>{
         if(!acc[transaction.customerId]){
             acc[transaction.customerId]={customerName:transaction.customerName,points:0};
         } 
-         acc[transaction.customerId].points+=transaction.rewardPoints;
+         acc[transaction.customerId].points+=Number(transaction.rewardPoints) || 0;
          return acc;
     },{});
     const rows=Object.entries(totals);
     const [page,setPage]=useState(0);
-    const [rowsPerPage,setRowsPerPage]=useState(5);
+    const [rowsPerPage,setRowsPerPage]=useState(10);
 
     const handleChangePage=(e,newPage)=>{
       setPage(newPage);
@@ -34,7 +34,7 @@ const TotalRewardsTable =({transactions})=>{
         </TableHead>
         <TableBody>
             {rows.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map(([id,data])=>(
-                <TableRow key={id}><TableCell>{data.customerName}</TableCell><TableCell>{data.points}</TableCell></TableRow>
+                <TableRow key={id}><TableCell>{data.customerName}</TableCell><TableCell>{isNaN(data.points) ? 0 : data.points}</TableCell></TableRow>
             ))}
         </TableBody>
 

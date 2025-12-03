@@ -9,7 +9,7 @@ const TransactionsTable =({transactions})=>{
 
     const sortedTransactions=[...transactions].sort((a,b)=>new Date(b.purchaseDate)-new Date(a.purchaseDate));
     const [page,setPage]=useState(0);
-    const rowsPerPage=5;
+    const rowsPerPage=10;
 
     const handleChangePage=(e,newPage)=>{
       setPage(newPage);
@@ -29,7 +29,7 @@ const TransactionsTable =({transactions})=>{
         </TableHead>
         <TableBody>
             {paginatedData.map((transaction,index)=>(
-                <TableRow key={transaction.transactionId}>
+                <TableRow key={index}>
                    
                     <TableCell>{transaction.transactionId}</TableCell>
                     <TableCell>{transaction.customerName}</TableCell>

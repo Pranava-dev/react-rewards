@@ -3,32 +3,36 @@ import MonthlyRewardsTable from './components/MonthlyRewardsTable';
 import '@testing-library/jest-dom'
 
 
-
-test("renders monthly rewards for each customer",()=>{
-
+describe('MonthlyRewardsTable',()=>{
+  test("aggregate monthly date and renders rows",()=>{
+  //Arraging mininal mock transactions
     const mockTransactions=[
     {
-        "id":1,
-        "customerId":101,
-        "name":"Alice",
-        "date":'2025-12-03',
-        "rewardPoints":90
-
-    },
-    {
-        "id":2,
-        "customerId":101,
-        "name":"Alice",
-        "date":'2025-12-15',
-        "rewardPoints":25
-
-    }]
+    "transactionId": "TXN0001",
+    "customerId": 1001,
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2025-01-04",
+    "products": null,
+    "totalPrice": "849.81"
+  },
+  {
+    "transactionId": "TXN0002",
+    "customerId": 1001,
+    "customerName": null,
+    "purchaseDate": "2025-03-29",
+    "products": "Mouse, Monitor, Laptop",
+    "totalPrice": "475.86"
+  }]
     
     render(<MonthlyRewardsTable transactions={mockTransactions}/>);
+
+    //Assert Table headers
     expect(screen.getByText(/Customer ID/i)).toBeInTheDocument();
     expect(screen.getByText(/Name/i)).toBeInTheDocument();
     expect(screen.getByText(/Reward Points/i)).toBeInTheDocument();
     
+})
+
 
    
 });

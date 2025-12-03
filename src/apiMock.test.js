@@ -1,19 +1,15 @@
-
-import { fetchTransactions } from "./services/api";
-
-jest.mock("./services/api",()=>({
-    fetchTransactions:jest.fn()
-}));
-
-describe("Mocking API",()=>{
-
-
+import React from "react";
+import TransactionsLoader from "./components/TransactionsLoader";
+import {render,waitFor} from '@testing-library/react';
 
 
 //Test Mock API and verify data
 
-test("fetchTransacrtions should return mocked data",async()=>{
-   const  mockData=[{
+global.fetch = jest.fn(()=>
+   Promise.resolve({
+    ok:true,
+    json:()=>
+   Promise.resolve([{
     "transactionId": "TXN0001",
     "customerId": 1001,
     "customerName": "Alice Johnson",
@@ -28,21 +24,29 @@ test("fetchTransacrtions should return mocked data",async()=>{
     "purchaseDate": "2025-03-29",
     "products": "Mouse, Monitor, Laptop",
     "totalPrice": "475.86"
-  },];
-  fetchTransactions.mockResolvedValue(mockData);
+  },]),
+})
+);
 
-  const result =await fetchTransactions();
+  test('loads and sets transactions',async()=>{
+    const setTransactions =jest.fn();
+    const setFilteredTransactions=jest.fn();
+    const setLoading=jest.fn();
+    const setError=jest.fn();
 
-  expect(result).toEqual(mockData);
-  expect(fetchTransactions).toHaveBeenCalledTimes(1);
+    render(
 
+      <TransactionsLoader setTransactions={setTransactions}  setFilteredTransactions={setFilteredTransactions} setLoading={setLoading} setError={setError} />
+    );
 
+    await waitFor(()=>{
+      expect(fetch).toHaveBeenCalledWith('transactions.json');
+      expect(setTransactions).toHaveBeenCalled();
+      expect(setFilteredTransactions).toHaveBeenCalled();
+    })
+    }
 
-});
-
-
-
-});
+  );
 
 
 

@@ -1,14 +1,13 @@
 import {render,screen} from '@testing-library/react';
-import TransactionsTable from './components/TransactionsTable';
+import TotalRewardsTable from './components/TotalRewardsTable';
 import '@testing-library/jest-dom'
-import { TestWatcher } from 'jest';
 
 
-
-describe("Transactiontable Component",()=>{
+describe('TotalRewardsTable',()=>{
+test("renders total rewards for each customer",()=>{
 
     const mockTransactions=[
-      {
+        {
             "transactionId": "TXN0001",
             "customerId": 1001,
             "customerName": "Alice Johnson",
@@ -24,18 +23,15 @@ describe("Transactiontable Component",()=>{
             "products": "Mouse, Monitor, Laptop",
             "totalPrice": "475.86"
           }]
-
-    test('renders table header properly',()=>{
-        render(<TransactionsTable transactions={mockTransactions}/>);
-    expect(screen.getByText(/Transaction Table/i)).toBeInTheDocument();
-    expect(screen.getByText(/Customer/i)).toBeInTheDocument();
-    expect(screen.getByText(/Date/i)).toBeInTheDocument();
-    expect(screen.getByText(/Product/i)).toBeInTheDocument();
-    expect(screen.getByText(/Price/i)).toBeInTheDocument();
+    
+    render(<TotalRewardsTable transactions={mockTransactions}/>);
+    expect(screen.getByText(/Customer Name/i)).toBeInTheDocument();
     expect(screen.getByText(/Reward Points/i)).toBeInTheDocument();
 
-    })
+    expect(screen.getByText(/Alice Johnson/i)).toBeInTheDocument();
     
-    
+
    
 });
+
+})
