@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-starter",
+  "name": "customer-rewards-data",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -47,6 +48,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jest": "^27.5.1",
+    "prettier": "^3.7.4",
     "vite": "^7.2.2"
   }
 }
