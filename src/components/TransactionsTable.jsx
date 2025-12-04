@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TablePagination,
-} from "@mui/material";
+import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,TablePagination,} from "@mui/material";
 
 const TransactionsTable = ({ transactions }) => {
   const sortedTransactions = [...transactions].sort(
@@ -33,7 +24,7 @@ const TransactionsTable = ({ transactions }) => {
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow >
               <TableCell>ID</TableCell>
               <TableCell>Customer</TableCell>
               <TableCell>Date</TableCell>

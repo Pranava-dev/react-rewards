@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TablePagination,
-} from "@mui/material";
+import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,TablePagination,} from "@mui/material";
 
 const TotalRewardsTable = ({ transactions }) => {
   const totals = transactions.reduce((acc, transaction) => {
