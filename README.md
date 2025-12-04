@@ -46,7 +46,7 @@ Transaction API response<br/>
 
 # Directory structure
 ```bash
-customer-rewards/
+react-rewards/
 ├── public/
 │   ├── transactions.json
 │   
