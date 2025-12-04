@@ -1,5 +1,5 @@
 
-import React from "react";
+import React ,{useState,useMemo} from "react";
 import {
   Table,
   TableHead,
@@ -18,7 +18,7 @@ import {
  * @param {Array} props.columns - [{ id: 'field', label: 'Header' }]
  * @param {Array} props.rows - [{ id: 1, field: value }]
  */
-const Table = ({ columns, rows }) => {
+const SimpleTable = ({ columns, rows }) => {
   const [orderBy, setOrderBy] = useState(columns[0].id);
   const [order, setOrder] = useState("asc");
   const [page, setPage] = useState(0);
@@ -86,4 +86,4 @@ const Table = ({ columns, rows }) => {
   );
 };
 
-export default Table;
+export default SimpleTable;

@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import Table from "./Table";
+import SimpleTable from "./SimpleTable";
 
 /**
  * @typedef {Object} MonthlyRewardsTableProps
@@ -41,7 +41,7 @@ const MonthlyRewardsTable = ({ transactions }) => {
   return (
     <div>
       <h1>Monthly Rewards</h1>
-      <Table columns={columns} rows={rows} />
+      <SimpleTable columns={columns} rows={rows} />
     </div>
   );
 };

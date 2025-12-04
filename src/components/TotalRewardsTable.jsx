@@ -1,12 +1,12 @@
 
 /**
- * @Component TotalRewardsTable.jsx
+ * @component TotalRewardsTable.jsx
  * @description Sums reward points per customer and renders a compact table
- * using the Table component.
+ * using the SimpleTable component.
  */
 
 import React from "react";
-import Table from "./Table";
+import SimpleTable from "./SimpleTable";
 
 /**
  * @typedef {Object} TotalRewardsTableProps
@@ -42,7 +42,7 @@ const TotalRewardsTable = ({ transactions }) => {
   return (
     <div>
       <h1>Total Rewards</h1>
-      <Table columns={columns} rows={rows} />
+      <SimpleTable columns={columns} rows={rows} />
     </div>
   );
 };

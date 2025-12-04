@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import Table from "./Table";
+import SimpleTable from "./SimpleTable";
 
 /**
  * @typedef {Object} Transaction
@@ -46,13 +46,13 @@ const TransactionsTable = ({ transactions }) => {
     { id: "date", label: "Date" },
     { id: "product", label: "Product" },
     { id: "price", label: "Price", numeric: true },
-    { id: "points", label: "Reward Points", numeric: true },
+    { id: "points", label: "Points", numeric: true },
   ];
 
   return (
     <div>
       <h1>Transactions</h1>
-      <Table columns={columns} rows={rows} />
+      <SimpleTable columns={columns} rows={rows} />
     </div>
   );
 };
