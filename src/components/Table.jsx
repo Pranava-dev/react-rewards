@@ -18,11 +18,11 @@ import {
  * @param {Array} props.columns - [{ id: 'field', label: 'Header' }]
  * @param {Array} props.rows - [{ id: 1, field: value }]
  */
-const SimpleTable = ({ columns, rows }) => {
-  const [orderBy, setOrderBy] = React.useState(columns[0].id);
-  const [order, setOrder] = React.useState("asc");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+const Table = ({ columns, rows }) => {
+  const [orderBy, setOrderBy] = useState(columns[0].id);
+  const [order, setOrder] = useState("asc");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleSort = (colId) => {
     const isAsc = orderBy === colId && order === "asc";
@@ -30,7 +30,7 @@ const SimpleTable = ({ columns, rows }) => {
     setOrderBy(colId);
   };
 
-  const sortedRows = React.useMemo(() => {
+  const sortedRows = useMemo(() => {
     return [...rows].sort((a, b) => {
       if (a[orderBy] < b[orderBy]) return order === "asc" ? -1 : 1;
       if (a[orderBy] > b[orderBy]) return order === "asc" ? 1 : -1;
@@ -86,4 +86,4 @@ const SimpleTable = ({ columns, rows }) => {
   );
 };
 
-export default SimpleTable;
+export default Table;

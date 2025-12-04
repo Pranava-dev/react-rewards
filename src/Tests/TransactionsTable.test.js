@@ -25,7 +25,7 @@ describe("Transactiontable Component", () => {
 
   test("renders table header properly", () => {
     render(<TransactionsTable transactions={mockTransactions} />);
-    expect(screen.getByText(/Transaction Table/i)).toBeInTheDocument();
+    expect(screen.getByText(/Transactions/i)).toBeInTheDocument();
     expect(screen.getByText(/Customer/i)).toBeInTheDocument();
     expect(screen.getByText(/Date/i)).toBeInTheDocument();
     expect(screen.getByText(/Product/i)).toBeInTheDocument();

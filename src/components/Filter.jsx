@@ -2,31 +2,20 @@ import React, { useState } from "react";
 import { Box, Button, Paper, Stack, TextField } from "@mui/material";
 
 const Filter = ({ transactions, setFilteredTransactions }) => {
-  const [startMonth, setStartMonth] = useState("");
-  const [endMonth, setEndMonth] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
 
-  //Get first and last day of month
-
-  const getMonthBonds=(yyyyMm)=>{
-     const [year,month]=yyyyMm.split("-");
-     const y=Number(year);
-     const m=Number(month-1); //js months are 0 based
-     const start=new Date(y,m,1);
-     const end=new Date(y,m+1,0);//Day 0 of next month = last day of current
-     return {start,end};
-
-  }
+ 
   const handleFilter = () => {
-    if (!startMonth && !endMonth) {
+    if (!startDate && !endDate) {
       setFilteredTransactions(transactions);
       return;
     }
-    const startKey=startMonth||endMonth;
-    const endKey=endMonth||startMonth;
+    const start=startDate ? new Date(startDate) :null ;
+    const end=endDate? new Date(endDate) :null ;
 
-    const {start} = getMonthBonds(startKey);
-    const {end} = getMonthBonds(endKey);
+  
     const filtered = transactions.filter((transaction) => {
       const transacDate = new Date(transaction.purchaseDate);
       return transacDate >= start && transacDate <= end;
@@ -37,8 +26,8 @@ const Filter = ({ transactions, setFilteredTransactions }) => {
   const handleReset = () => {
     
     setFilteredTransactions(transactions);
-    setStartMonth("");
-    setEndMonth("");
+    setStartDate("");
+    setEndDate("");
     }
 
   return (
@@ -49,29 +38,29 @@ const Filter = ({ transactions, setFilteredTransactions }) => {
         alignItems="center"
       >
         <TextField
-          label="Start Month"
+          label="Start Date"
           slotProps={{
             inputLabel: { shrink: true },
           }}
-          type="month"
-          value={startMonth}
+          type="date"
+          value={startDate}
           sx={{ minWidth: 180 }}
-          onChange={(e) => setStartMonth(e.target.value)}
+          onChange={(e) => setStartDate(e.target.value)}
         />
         <TextField
-          label="End Month"
+          label="End Date"
           slotProps={{
             inputLabel: { shrink: true },
           }}
-          type="month"
-          value={endMonth}
+          type="date"
+          value={endDate}
           sx={{ minWidth: 180 }}
-          onChange={(e) => setEndMonth(e.target.value)}
+          onChange={(e) => setEndDate(e.target.value)}
         />
         <Button onClick={handleFilter} variant="contained">
           Apply Filter
         </Button>
-        <Button onClick={handleReset} >
+        <Button onClick={handleReset} variant="outlined" >
           Reset
         </Button>
       </Stack>

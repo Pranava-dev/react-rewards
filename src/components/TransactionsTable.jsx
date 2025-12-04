@@ -1,70 +1,60 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,TablePagination,} from "@mui/material";
 
+/**
+ * @component TransactionsTable.jsx
+ * @description Example component that displays transactions using Table.
+ * It maps the incoming `transactions` to rows and defines columns.
+ */
+
+import React from "react";
+import Table from "./Table";
+
+/**
+ * @typedef {Object} Transaction
+ * @property {string|number} transactionId
+ * @property {string} customerName
+ * @property {string|Date} purchaseDate - ISO string or Date.
+ * @property {string} [products]
+ * @property {number|string} totalPrice
+ * @property {number|string} rewardPoints
+ */
+
+/**
+ * @typedef {Object} TransactionsTableProps
+ * @property {Transaction[]} transactions
+ */
+
+/**
+ * Render a simple transactions table with sorting and pagination.
+ *
+ * @param {TransactionsTableProps} props
+ */
 const TransactionsTable = ({ transactions }) => {
-  const sortedTransactions = [...transactions].sort(
-    (a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate),
-  );
-  const [page, setPage] = useState(0);
-  const rowsPerPage = 10;
+  // Map props to normalized rows for the table
+  const rows = (transactions ?? []).map((transaction, i) => ({
+    id: i, // safe fallback id for demo; use stable ids in production
+    transactionId: transaction.transactionId ?? "—",
+    customerName: transaction.customerName && transaction.customerName.trim() !== "" ? transaction.customerName : "Unknown",
+    date: new Date(transaction.purchaseDate).toLocaleDateString(),
+    product: transaction.products && transaction.products.trim() !== "" ? transaction.products : "N/A",
+    price: Number(transaction.totalPrice ?? 0),
+    points: Number(transaction.rewardPoints ?? 0),
+  }));
 
-  const handleChangePage = (e, newPage) => {
-    setPage(newPage);
-  };
-
-  const paginatedData = sortedTransactions.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
-  );
+  const columns = [
+    { id: "transactionId", label: "TransactionID" },
+    { id: "customerName", label: "Customer" },
+    { id: "date", label: "Date" },
+    { id: "product", label: "Product" },
+    { id: "price", label: "Price", numeric: true },
+    { id: "points", label: "Reward Points", numeric: true },
+  ];
 
   return (
     <div>
-      <h1>Transaction Table</h1>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow >
-              <TableCell>ID</TableCell>
-              <TableCell>Customer</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Product</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Reward Points</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {paginatedData.map((transaction, index) => (
-              <TableRow key={index}>
-                <TableCell>{transaction.transactionId}</TableCell>
-                <TableCell>{transaction.customerName  || "Unknown"}</TableCell>
-                <TableCell>
-                  {new Date(transaction.purchaseDate).toLocaleDateString()}
-                </TableCell>
-                <TableCell>{transaction.products || "N/A"}</TableCell>
-                <TableCell>
-                  ${parseFloat(transaction.totalPrice).toFixed(2)}
-                </TableCell>
-                <TableCell>{transaction.rewardPoints}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          count={sortedTransactions.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          rowSpan={[]}
-        />
-      </TableContainer>
+      <h1>Transactions</h1>
+      <Table columns={columns} rows={rows} />
     </div>
   );
-};
-
-TransactionsTable.propTypes = {
-  transactions: PropTypes.array.isRequired,
 };
 
 export default TransactionsTable;

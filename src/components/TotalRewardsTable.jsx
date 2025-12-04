@@ -1,56 +1,48 @@
-import React, { useState } from "react";
-import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,TablePagination,} from "@mui/material";
 
+/**
+ * @Component TotalRewardsTable.jsx
+ * @description Sums reward points per customer and renders a compact table
+ * using the Table component.
+ */
+
+import React from "react";
+import Table from "./Table";
+
+/**
+ * @typedef {Object} TotalRewardsTableProps
+ * @property {Array<Object>} transactions - Source transactions.
+ */
+
+/**
+ * Total rewards per customer.
+ * @param {TotalRewardsTableProps} props
+ */
 const TotalRewardsTable = ({ transactions }) => {
-  const totals = transactions.reduce((acc, transaction) => {
-    if (!acc[transaction.customerId]) {
-      acc[transaction.customerId] = {
-        customerName: transaction.customerName,
-        points: 0,
-      };
-    }
-    acc[transaction.customerId].points += Number(transaction.rewardPoints) || 0;
+  const totals = (transactions ?? []).reduce((acc, t) => {
+    const id = t.customerId ?? "—";
+    const name = t.customerName && t.customerName.trim() !== "" ? t.customerName : "Unknown";
+    const pts = Number(t.rewardPoints ?? 0);
+    if (!acc[id]) acc[id] = { id, name, points: 0 };
+    acc[id].points += pts;
     return acc;
   }, {});
-  const rows = Object.entries(totals);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (e, newPage) => {
-    setPage(newPage);
-  };
+  const rows = Object.values(totals).map((r, i) => ({
+    id: i,
+    name: r.name,
+    points: Number(r.points ?? 0),
+  }));
+
+  const columns = [
+    { id: "id", label: "Customer ID" },
+    { id: "name", label: "Customer Name" },
+    { id: "points", label: "Reward Points", numeric: true },
+  ];
 
   return (
     <div>
       <h1>Total Rewards</h1>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Customer Name</TableCell>
-              <TableCell>Reward Points</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(([id, data]) => (
-                <TableRow key={id}>
-                  <TableCell>{data.customerName  || "Unknown"}</TableCell>
-                  <TableCell>{isNaN(data.points) ? 0 : data.points}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          count={rows.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          rowSpan={[]}
-        />
-      </TableContainer>
+      <Table columns={columns} rows={rows} />
     </div>
   );
 };

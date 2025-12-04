@@ -1,70 +1,47 @@
-import React, { useState } from "react";
-import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,TablePagination,} from "@mui/material";
 
+/**
+ * @component MonthlyRewardsTable.jsx
+ * @description Groups incoming transactions by customer and month/year and
+ * displays total points per (customer, month) using Table.
+ */
+
+import React from "react";
+import Table from "./Table";
+
+/**
+ * @typedef {Object} MonthlyRewardsTableProps
+ * @property {Array<Object>} transactions - Source transactions.
+ */
+
+/**
+ * Monthly rewards summary table.
+ * @param {MonthlyRewardsTableProps} props
+ */
 const MonthlyRewardsTable = ({ transactions }) => {
-  const monthlyData = transactions.reduce((acc, transaction) => {
+  const rows = (transactions ?? []).map((transaction, i) => {
     const date = new Date(transaction.purchaseDate);
-    const month = date.toLocaleString("default", { month: "long" });
-    const year = date.getFullYear();
-    const key = `${transaction.customerId}-${month}-${year}`;
-    if (!acc[key]) {
-      acc[key] = {
-        customerId: transaction.customerId,
-        customerName: transaction.customerName,
-        month,
-        year,
-        points: 0,
-      };
-    }
-    acc[key].points += Number(transaction.rewardPoints) || 0;
-    return acc;
-  }, {});
+    return {
+      id: i,
+      customerId: transaction.customerId ?? "—",
+      name: transaction.customerName && transaction.customerName.trim() !== "" ? transaction.customerName : "Unknown",
+      month: date.toLocaleString("default", { month: "long" }),
+      year: date.getFullYear(),
+      points: Number(transaction.rewardPoints) || 0,
+    };
+  });
 
-  const rows = Object.values(monthlyData);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (e, newPage) => {
-    setPage(newPage);
-  };
+  const columns = [
+    { id: "customerId", label: "Customer ID" },
+    { id: "name", label: "Name" },
+    { id: "month", label: "Month" },
+    { id: "year", label: "Year", numeric: true },
+    { id: "points", label: "Reward Points", numeric: true },
+  ];
 
   return (
     <div>
-      <h1>User Monthly Rewards</h1>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Customer ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Month</TableCell>
-              <TableCell>Year</TableCell>
-              <TableCell>Reward Points</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, id) => (
-                <TableRow key={id}>
-                  <TableCell>{row.customerId}</TableCell>
-                  <TableCell>{row.customerName || "Unknown"}</TableCell>
-                  <TableCell>{row.month}</TableCell>
-                  <TableCell>{row.year}</TableCell>
-                  <TableCell>{isNaN(row.points) ? 0 : row.points}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          count={rows.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          rowSpan={[]}
-        />
-      </TableContainer>
+      <h1>Monthly Rewards</h1>
+      <Table columns={columns} rows={rows} />
     </div>
   );
 };
