@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { calculateRewardPoints } from "../utils/calculateRewards";
 
+/**
+ * @component TransactionsLoader.jsx
+ * @description It will  Fetches transaction data from JSON file.
+ 
+ */
+
+
 const TransactionsLoader = ({
   setTransactions,
   setFilteredTransactions,

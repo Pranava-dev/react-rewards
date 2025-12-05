@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Box, Button, Paper, Stack, TextField } from "@mui/material";
 
+/**
+ * @component Filter.jsx
+ * @description It will filter the transactions based on the choosen date range.
+ 
+ */
+
 const Filter = ({ transactions, setFilteredTransactions }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
